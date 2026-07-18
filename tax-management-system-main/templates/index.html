@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Income Tax & Client Management System</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <!-- Google Fonts for a professional dashboard look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <h1>Pareek Associates</h1>
+            <span class="badge">Internal Portal</span>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- Summary Alert Component -->
+        <section class="intro-card">
+            <h2>Automated Income Tax Calculator</h2>
+            <p>Compute dynamic tax liabilities instantly based on client financial inputs. Values calculated here map directly to the <code>TaxRecords</code> schema blueprint.</p>
+        </section>
+
+        <div class="dashboard-grid">
+            <!-- Form Card -->
+            <div class="card">
+                <h3>Financial Inputs</h3>
+                <form id="taxForm" novalidate>
+                    <div class="form-group">
+                        <label for="financialYear">Financial Year (FY)</label>
+                        <select id="financialYear" required>
+                            <option value="2025-2026">2025 - 2026</option>
+                            <option value="2024-2025">2024 - 2025</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="grossIncome">Gross Annual Income (₹)</label>
+                        <input type="number" id="grossIncome" placeholder="e.g. 1200000" min="0" required>
+                        <span class="error-msg" id="grossError">Please enter a valid income amount.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deductions">Total Deductions (₹)</label>
+                        <input type="number" id="deductions" placeholder="e.g. 150000" min="0" required>
+                        <span class="error-msg" id="deductionsError">Deductions cannot exceed gross income.</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Compute Tax Liability</button>
+                </form>
+            </div>
+
+            <!-- Live Calculation Results Card -->
+            <div class="card result-card">
+                <h3>Calculation Breakdown</h3>
+                <div class="result-placeholder" id="placeholderText">
+                    <p>Enter client details and click compute to generate the tax breakdown.</p>
+                </div>
+                <div class="result-display hidden" id="resultDisplay">
+                    <div class="metric-row">
+                        <span>Taxable Income:</span>
+                        <strong id="resTaxableIncome">₹0</strong>
+                    </div>
+                    <div class="metric-row highlight">
+                        <span>Estimated Tax Payable:</span>
+                        <strong id="resTaxPayable">₹0</strong>
+                    </div>
+                    
+                    <div class="info-note">
+                        <p><strong>Note:</strong> Calculated using standard tax slabs (0% up to ₹3L, 5% to ₹7L, 10% to ₹10L, 15% to ₹12L, 20% to ₹15L, 30% above ₹15L).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- History Log Section -->
+        <section class="card history-card" style="margin-top: 2rem;">
+            <div class="history-header">
+                <h3>Saved Client Calculations Log</h3>
+                <button id="refreshLogBtn" class="btn btn-secondary" style="width: auto; padding: 0.5rem 1rem;">🔄 Refresh Records</button>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Record ID</th>
+                            <th>Client Email</th>
+                            <th>FY</th>
+                            <th>Gross Income</th>
+                            <th>Deductions</th>
+                            <th>Tax Payable</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- Dynamic rows will be rendered here by Javascript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="../public/js/app.js"></script>
+</body>
+</html>
